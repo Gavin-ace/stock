@@ -1,0 +1,29 @@
+server:
+  port: 8091
+spring:
+  datasource:
+    druid:
+      username: root
+      password: 123456
+      url: jdbc:mysql://localhost:3306/stock_db?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false&serverTimezone=Asia/Shanghai
+      driver-class-name: com.mysql.jdbc.Driver
+
+      initialSize: 6
+      # 最小连接池个数
+      minIdle: 2
+      # 最大连接池个数
+      maxActive: 20
+
+
+      maxWait: 60000
+  profiles:
+    active: cache
+
+mybatis:
+  type-aliases-package: com.lzj.pojo
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
