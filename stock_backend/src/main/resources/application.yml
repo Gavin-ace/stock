@@ -17,7 +17,8 @@ spring:
 
       maxWait: 60000
   profiles:
-    active: cache
+    active: cache,stock
+
 
 mybatis:
   type-aliases-package: com.lzj.pojo

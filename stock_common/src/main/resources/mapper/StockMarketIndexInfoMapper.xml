@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.lzj.pojo.mapper.StockMarketIndexInfoMapper">
+<mapper namespace="com.lzj.mapper.StockMarketIndexInfoMapper">
 
     <resultMap id="BaseResultMap" type="com.lzj.pojo.entity.StockMarketIndexInfo">
             <id property="id" column="id" jdbcType="BIGINT"/>
@@ -17,6 +17,27 @@
             <result property="tradeVolume" column="trade_volume" jdbcType="DECIMAL"/>
             <result property="curTime" column="cur_time" jdbcType="TIMESTAMP"/>
     </resultMap>
+
+    <select id="getMarketInfo" resultType="com.lzj.pojo.domain.InnerMarketDomain">
+        select
+            smi.market_code as code,
+            smi.market_name as name,
+            smi.open_point as openPoint,
+            smi.cur_point as curPoint,
+            smi.pre_close_point as preClosePrice,
+            smi.trade_amount as tradeAmt,
+            smi.trade_volume as tradeVol,
+            smi.cur_point-smi.pre_close_point as upDown,
+            (smi.cur_point-smi.pre_close_point)/smi.pre_close_point as rose,
+            (smi.max_point-smi.min_point)/smi.pre_close_point as amplitude,
+            smi.cur_time as curTime
+        from stock_market_index_info as smi
+        where smi.market_code in
+        <foreach collection="marketIds" item="marketId" open="(" separator="," close=")">
+                #{marketId}
+        </foreach>
+            and smi.cur_time=#{timePoint}
+    </select>
 
     <sql id="Base_Column_List">
         id,market_code,market_name,

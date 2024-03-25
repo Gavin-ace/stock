@@ -1,6 +1,11 @@
 package com.lzj.mapper;
 
+import com.lzj.pojo.domain.InnerMarketDomain;
 import com.lzj.pojo.entity.StockMarketIndexInfo;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.Date;
+import java.util.List;
 
 /**
 * @author HAWEI
@@ -21,5 +26,13 @@ public interface StockMarketIndexInfoMapper {
     int updateByPrimaryKeySelective(StockMarketIndexInfo record);
 
     int updateByPrimaryKey(StockMarketIndexInfo record);
+
+    /**
+     * 根据大盘id和时间查询大盘信息
+     * @param marketIds 大盘id集合
+     * @param timePoint 当前时间点（默认精确到分钟）
+     * @return
+     */
+    List<InnerMarketDomain> getMarketInfo(@Param("marketIds") List<String> marketIds, @Param("timePoint")Date timePoint);
 
 }
