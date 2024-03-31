@@ -1,6 +1,14 @@
 package com.lzj.mapper;
 
+import com.lzj.pojo.domain.StockUpdownDomain;
 import com.lzj.pojo.entity.StockBlockRtInfo;
+import com.lzj.pojo.entity.StockMarketIndexInfo;
+import org.apache.ibatis.annotations.Param;
+
+
+import java.util.Date;
+import java.util.List;
+
 
 /**
 * @author HAWEI
@@ -22,4 +30,8 @@ public interface StockBlockRtInfoMapper {
 
     int updateByPrimaryKey(StockBlockRtInfo record);
 
+    List<StockMarketIndexInfo> sectorAllLimit(Date lastDate);
+
+    List<StockUpdownDomain> getStockPageInfo(@Param("timePoint") Date lastDate);
 }
+

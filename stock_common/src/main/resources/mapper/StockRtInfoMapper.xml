@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.lzj.pojo.mapper.StockRtInfoMapper">
+<mapper namespace="com.lzj.mapper.StockRtInfoMapper">
 
     <resultMap id="BaseResultMap" type="com.lzj.pojo.entity.StockRtInfo">
             <id property="id" column="id" jdbcType="BIGINT"/>
@@ -30,6 +30,22 @@
         <include refid="Base_Column_List" />
         from stock_rt_info
         where  id = #{id,jdbcType=BIGINT} 
+    </select>
+    <select id="getAllStockUpdownByTime" resultType="com.lzj.pojo.domain.StockUpdownDomain">
+        select
+            trade_amount as tradeAmt,
+            pre_close_price as preClosePrice,
+            (max_price-min_price)/pre_close_price as amplitude,
+            stock_code as code,
+            stock_name as name,
+            cur_time as curDate,
+            trade_volume as tradeVol,
+            cur_price-pre_close_price as increase,
+            (cur_price-pre_close_price)/pre_close_price as upDown,
+            cur_price as tradePrice
+        from stock_rt_info
+        where cur_time=#{timePoint}
+        order by upDown desc
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">

@@ -1,7 +1,7 @@
 package com.lzj.config;
 
 
-import com.lzj.pojo.vo.StockInfoConfig;
+import com.lzj.pojo.domain.StockInfoConfig;
 import com.lzj.utils.IdWorker;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;

@@ -1,6 +1,14 @@
 package com.lzj.mapper;
 
+import com.lzj.pojo.domain.StockUpdownDomain;
 import com.lzj.pojo.entity.StockRtInfo;
+import org.apache.ibatis.annotations.Param;
+import org.joda.time.DateTime;
+
+import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
 * @author HAWEI
@@ -21,5 +29,17 @@ public interface StockRtInfoMapper {
     int updateByPrimaryKeySelective(StockRtInfo record);
 
     int updateByPrimaryKey(StockRtInfo record);
+
+    List<StockUpdownDomain> getAllStockUpdownByTime(@Param("timePoint") Date timePoint);
+
+    /**
+     * 查询指定时间范围内每分钟涨停或者跌停的数量
+     * @param openTime 开始时间
+     * @param curTime 结束时间 一般开始时间和结束时间在同一天
+     * @param flag 约定:1->涨停 0:->跌停
+     * @return
+     */
+    List<Map> getStockUpdownCount(@Param("openDate") DateTime openTime, @Param("curTime") DateTime curTime, @Param("flag") int flag);
+
 
 }
